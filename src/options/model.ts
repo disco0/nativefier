@@ -2,6 +2,7 @@ import * as electronPackager from 'electron-packager';
 
 export interface ElectronPackagerOptions extends electronPackager.Options {
   targetUrl: string;
+  platform: string;
 }
 
 export interface AppOptions {
@@ -32,6 +33,7 @@ export interface AppOptions {
     inject: string[];
     insecure: boolean;
     internalUrls: string;
+    blockExternalUrls: boolean;
     maximize: boolean;
     nativefierVersion: string;
     processEnvs: string;
@@ -54,3 +56,7 @@ export interface AppOptions {
     zoom: number;
   };
 }
+
+export type NativefierOptions = Partial<
+  AppOptions['packager'] & AppOptions['nativefier']
+>;

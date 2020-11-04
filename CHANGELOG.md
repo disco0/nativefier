@@ -1,4 +1,30 @@
 
+10.1.0 / 2020-08-29
+===================
+
+  * **[BREAKING CHANGE] Bump default Electron to 10.1.0 / Chromium 85**
+  * Support `arm64` architecture (PR #1037, fix #804)
+  * On successful build, better explain how to run the app and what to do with it (fix #1029)
+  * Bump to TypeScript 4.x
+
+9.2.0 / 2020-08-10
+==================
+
+  * Add `--block-external-urls` flag to forbid external navigation attempts (fix #978, PR#1012)
+  * Restore Docker docs in README, now that Docker build-on-release has been fixed (fix #848)
+  * Emit TS type declarations, and type NativefierOptions (PR #1016)
+  * Emit a warning about incorrectly-named "Electron" process when building windows apps under non-Windows and without Wine (fix #1022)
+  * Add unified {build,test} watch mode, using `concurrently` (PR #1011)
+  * Bump default Electron to 9.2.0
+  * Bump eslint to 7.x
+
+9.1.0 / 2020-07-18
+==================
+
+  * Fix 'Image could not be created' app error on run (fix #992)
+  * Bump docker Node image version from 8 to 12 (#996)
+  * Bump default Electron to 9.1.0 and deps (electron-packager, ts-loader)
+
 9.0.0 / 2020-06-13
 ==================
 

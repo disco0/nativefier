@@ -45,6 +45,7 @@ function pickElectronAppArgs(options: AppOptions): any {
     ignoreGpuBlacklist: options.nativefier.ignoreGpuBlacklist,
     insecure: options.nativefier.insecure,
     internalUrls: options.nativefier.internalUrls,
+    blockExternalUrls: options.nativefier.blockExternalUrls,
     maxHeight: options.nativefier.maxHeight,
     maximize: options.nativefier.maximize,
     maxWidth: options.nativefier.maxWidth,
@@ -134,7 +135,7 @@ export async function prepareElectronApp(
   try {
     await copyFileOrDir(src, dest);
   } catch (err) {
-    throw `Error copying electron app from ${src} to temp dir ${dest}. Error: ${err}`;
+    throw `Error copying electron app from ${src} to temp dir ${dest}. Error: ${(err as Error).toString()}`;
   }
 
   const appJsonPath = path.join(dest, '/nativefier.json');

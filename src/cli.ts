@@ -96,7 +96,7 @@ if (require.main === module) {
     })
     .option('-n, --name <value>', 'app name')
     .option('-p, --platform <value>', "'mac', 'mas', 'linux' or 'windows'")
-    .option('-a, --arch <value>', "'ia32' or 'x64' or 'armv7l'")
+    .option('-a, --arch <value>', "'ia32' or 'x64' or 'arm' or 'arm64'")
     .option(
       '--app-version <value>',
       '(macOS, windows only) the version of the app. Maps to the `ProductVersion` metadata property on Windows, and `CFBundleShortVersionString` on macOS.',
@@ -225,6 +225,10 @@ if (require.main === module) {
       'regex of URLs to consider "internal"; all other URLs will be opened in an external browser. Default: URLs on same second-level domain as app',
     )
     .option(
+      '--block-external-urls',
+      `forbid navigation to URLs not considered "internal" (see '--internal-urls').  Instead of opening in an external browser, attempts to navigate to external URLs will be blocked. Default: false`,
+    )
+    .option(
       '--proxy-rules <value>',
       'proxy rules; see https://www.electronjs.org/docs/api/session#sessetproxyconfig',
     )
@@ -292,15 +296,7 @@ if (require.main === module) {
   }
   checkInternet();
   const options = { ...positionalOptions, ...commander.opts() };
-  buildNativefierApp(options)
-    .then((appPath) => {
-      if (!appPath) {
-        log.info(`App *not* built to ${appPath}`);
-        return;
-      }
-      log.info(`App built to ${appPath}`);
-    })
-    .catch((error) => {
-      log.error('Error during build. Run with --verbose for details.', error);
-    });
+  buildNativefierApp(options).catch((error) => {
+    log.error('Error during build. Run with --verbose for details.', error);
+  });
 }

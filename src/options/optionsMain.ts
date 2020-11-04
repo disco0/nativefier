@@ -20,6 +20,7 @@ const SEMVER_VERSION_NUMBER_REGEX = /\d+\.\d+\.\d+[-_\w\d.]*/;
 /**
  * Process and validate raw user arguments
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getOptions(rawOptions: any): Promise<AppOptions> {
   const options: AppOptions = {
     packager: {
@@ -70,6 +71,7 @@ export async function getOptions(rawOptions: any): Promise<AppOptions> {
       inject: rawOptions.inject || [],
       insecure: rawOptions.insecure || false,
       internalUrls: rawOptions.internalUrls || null,
+      blockExternalUrls: rawOptions.blockExternalUrls || false,
       maximize: rawOptions.maximize || false,
       nativefierVersion: packageJson.version,
       processEnvs: rawOptions.processEnvs,
@@ -96,6 +98,7 @@ export async function getOptions(rawOptions: any): Promise<AppOptions> {
   if (options.nativefier.verbose) {
     log.setLevel('trace');
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       require('debug').enable('electron-packager');
     } catch (err) {
       log.debug(
@@ -135,13 +138,12 @@ export async function getOptions(rawOptions: any): Promise<AppOptions> {
     options.nativefier.userAgent = null;
   }
 
-  if (options.packager.platform.toLowerCase() === 'windows') {
+  const platform = options.packager.platform.toLowerCase();
+  if (platform === 'windows') {
     options.packager.platform = 'win32';
   }
 
-  if (
-    ['osx', 'mac', 'macos'].includes(options.packager.platform.toLowerCase())
-  ) {
+  if (['osx', 'mac', 'macos'].includes(platform)) {
     options.packager.platform = 'darwin';
   }
 
